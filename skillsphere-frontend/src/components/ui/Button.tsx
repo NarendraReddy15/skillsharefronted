@@ -22,6 +22,10 @@ const sizes = {
   lg: 'px-8 py-3 text-base'
 };
 
+// framer-motion's drag/animation event types conflict with React's DOM event types under strict mode
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const MotionButton = motion.button as any;
+
 const Button = ({
   variant = 'primary',
   size = 'md',
@@ -31,7 +35,7 @@ const Button = ({
   disabled,
   ...props
 }: ButtonProps) => (
-  <motion.button
+  <MotionButton
     whileTap={{ scale: 0.97 }}
     className={`
       inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all
@@ -45,7 +49,7 @@ const Button = ({
       <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
     ) : null}
     {children}
-  </motion.button>
+  </MotionButton>
 );
 
 export default Button;

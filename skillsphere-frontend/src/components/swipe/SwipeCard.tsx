@@ -56,14 +56,12 @@ export default function SwipeCard({ user, onSwipe, isTop }: Props) {
         )}
 
         {/* LIKE / NOPE stamps */}
-        <motion.div style={{ opacity: likeOp } as any}
-          className="absolute top-9 left-7 px-4 py-2 rounded-2xl font-black text-2xl border-[3px] border-emerald-400 text-emerald-400 rotate-[-16deg]"
-          style={{ background: 'rgba(16,185,129,0.12)', backdropFilter: 'blur(4px)' } as any}>
+        <motion.div style={{ opacity: likeOp, background: 'rgba(16,185,129,0.12)', backdropFilter: 'blur(4px)' } as any}
+          className="absolute top-9 left-7 px-4 py-2 rounded-2xl font-black text-2xl border-[3px] border-emerald-400 text-emerald-400 rotate-[-16deg]">
           LIKE
         </motion.div>
-        <motion.div style={{ opacity: nopeOp } as any}
-          className="absolute top-9 right-7 px-4 py-2 rounded-2xl font-black text-2xl border-[3px] border-red-400 text-red-400 rotate-[16deg]"
-          style={{ background: 'rgba(239,68,68,0.12)', backdropFilter: 'blur(4px)' } as any}>
+        <motion.div style={{ opacity: nopeOp, background: 'rgba(239,68,68,0.12)', backdropFilter: 'blur(4px)' } as any}
+          className="absolute top-9 right-7 px-4 py-2 rounded-2xl font-black text-2xl border-[3px] border-red-400 text-red-400 rotate-[16deg]">
           NOPE
         </motion.div>
 

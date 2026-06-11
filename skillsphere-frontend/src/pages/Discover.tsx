@@ -37,8 +37,9 @@ const Discover = () => {
     },
   });
 
-  const handleSwipe = (userId: string, direction: 'left' | 'right') =>
-    swipeMutation.mutateAsync({ targetId: userId, direction });
+  const handleSwipe = async (userId: string, direction: 'left' | 'right'): Promise<void> => {
+    await swipeMutation.mutateAsync({ targetId: userId, direction });
+  };
 
   const handleRefresh = () => { setIsEmpty(false); refetch(); };
 
