@@ -2,8 +2,7 @@ import axios from 'axios';
 import { useAuthStore } from '@/store/authStore';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://skillsharebackend-j5x4.onrender.com/api',
-  withCredentials: true
+  baseURL: import.meta.env.VITE_API_URL || 'https://localhost:5000/api',
 });
 
 api.interceptors.request.use((config) => {
