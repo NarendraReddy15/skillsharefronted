@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import { useAuth } from '@/hooks/useAuth';
 import { STAGGER, ITEM } from '@/lib/motion';
 
-const GOOGLE_URL = `${(import.meta.env.VITE_API_URL || 'http://localhost:5000/api').replace('/api', '')}/api/auth/google`;
+const GOOGLE_URL = `${(import.meta.env.VITE_API_URL || 'https://skillsharebackend-j5x4.onrender.com/api').replace('/api', '')}/api/auth/google`;
 
 const Logo = () => (
   <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
