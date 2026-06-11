@@ -68,8 +68,8 @@ const Matches = () => {
               <motion.div key={match._id} variants={ITEM} whileHover={HOVER_LIFT}
                 className="group card card-hover rounded-2xl overflow-hidden">
                 {/* Cover */}
-                <div className="relative h-28 overflow-hidden"
-                  style={{ background: 'linear-gradient(135deg,#4f46e5,#7c3aed)' }}>
+                <div className=" h-10 overflow-hidden"
+                  >
                   {match.user?.avatar && (
                     <img src={match.user.avatar} alt="" className="w-full h-full object-cover opacity-35 group-hover:opacity-45 transition-opacity"/>
                   )}
