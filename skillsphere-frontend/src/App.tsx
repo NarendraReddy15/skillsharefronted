@@ -59,6 +59,8 @@ const AppLayout = () => {
 const App = () => {
   const { isAuthenticated } = useAuthStore();
 
+  console.log("API URL:", import.meta.env.VITE_API_URL);
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
