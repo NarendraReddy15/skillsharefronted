@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: #080b14;
+    color: #f1f5f9;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::-webkit-scrollbar       { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.25); border-radius: 999px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(99,102,241,0.45); }
+  ::selection { background: rgba(99,102,241,0.3); }
+}
+
+@layer utilities {
+  /* Brand gradient helpers */
+  .brand-gradient { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); }
+  .brand-text {
+    background: linear-gradient(135deg, #818cf8, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glass card */
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .card-hover {
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .card-hover:hover {
+    border-color: rgba(99,102,241,0.25);
+    background: rgba(255,255,255,0.05);
+  }
+
+  /* Input */
+  .field {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #fff;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .field:focus {
+    outline: none;
+    border-color: rgba(99,102,241,0.5);
+    background: rgba(255,255,255,0.06);
+  }
+  .field::placeholder { color: rgba(148,163,184,0.5); }
+
+  /* Scrollable area */
+  .scroll-area { scrollbar-width: thin; scrollbar-color: rgba(99,102,241,0.25) transparent; }
+}
