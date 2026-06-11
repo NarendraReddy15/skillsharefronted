@@ -1,3 +1,4 @@
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -66,60 +67,71 @@ const Matches = () => {
             className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {matches.map((match) => (
               <motion.div key={match._id} variants={ITEM} whileHover={HOVER_LIFT}
-                className="group card card-hover rounded-2xl overflow-hidden">
+                className="group relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0f1724] to-[#0b0f1a] border border-white/6 shadow-[0_8px_30px_rgba(2,6,23,0.6)]">
                 {/* Cover */}
-                <div className="relative h-28 overflow-hidden"
-                  style={{ background: 'linear-gradient(135deg,#4f46e5,#7c3aed)' }}>
+                <div className="relative h-28">
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 opacity-20" />
                   {match.user?.avatar && (
-                    <img src={match.user.avatar} alt="" className="w-full h-full object-cover opacity-35 group-hover:opacity-45 transition-opacity"/>
+                    <img src={match.user.avatar} alt={match.user.name} className="w-full h-full object-cover opacity-30" />
                   )}
-                  <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom,transparent 40%,rgba(8,11,20,0.9))' }}/>
+                  <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom,transparent 40%,rgba(8,11,20,0.85))' }} />
                   {match.user?.isOnline && (
-                    <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2 py-0.5 rounded-full"
-                      style={{ background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(6px)' }}>
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]"/>
-                      <span className="text-[10px] text-white/80 font-medium">Online</span>
+                    <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-black/40">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-sm" />
+                      <span className="text-xs text-white/80">Online</span>
                     </div>
                   )}
                 </div>
 
-                <div className="px-4 pb-4">
-                  {/* Avatar overlap */}
-                  <div className="flex items-end justify-between -mt-7 mb-3">
-                    {match.user?.avatar
-                      ? <img src={match.user.avatar} alt={match.user.name}
-                          className="w-14 h-14 rounded-xl object-cover ring-2 shadow-lg" style={{ borderColor: '#080b14' }}/>
-                      : <div className="w-14 h-14 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg brand-gradient"
-                          style={{ outline: '2px solid #080b14' }}>
-                          {match.user?.name[0]}
-                        </div>
-                    }
-                    <p className="text-slate-600 text-[10px] mb-1">
-                      {formatDistanceToNow(new Date(match.createdAt), { addSuffix: true })}
-                    </p>
+                <div className="px-4 pb-4 pt-6">
+                  {/* Avatar overlap + header */}
+                  <div className="flex items-start justify-between -mt-10 mb-3">
+                    <div className="flex items-center gap-3">
+                      {match.user?.avatar
+                        ? (
+                          <img src={match.user.avatar} alt={match.user.name}
+                            className="w-16 h-16 rounded-xl object-cover ring-2 ring-[#080b14] shadow-lg" />
+                        ) : (
+                          <div className="w-16 h-16 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg bg-gradient-to-r from-purple-600 to-indigo-600">
+                            {match.user?.name[0]}
+                          </div>
+                        )}
+
+                      <div>
+                        <h3 className="font-bold text-white text-sm leading-5">{match.user?.name}</h3>
+                        <p className="text-slate-400 text-xs">{match.user?.title || match.user?.location || ''}</p>
+                      </div>
+                    </div>
+
+                    <p className="text-slate-500 text-[11px]">{formatDistanceToNow(new Date(match.createdAt), { addSuffix: true })}</p>
                   </div>
 
-                  <h3 className="font-bold text-white text-sm mb-0.5">{match.user?.name}</h3>
-                  {match.user?.location && (
-                    <p className="flex items-center gap-1 text-slate-500 text-xs mb-2">
-                      <MapPin className="w-3 h-3"/>{match.user.location}
-                    </p>
-                  )}
-
-                  <div className="flex flex-wrap gap-1 mb-3">
-                    {match.user?.skills.slice(0, 2).map(s => (
-                      <span key={s.name} className={`text-[10px] font-medium px-2 py-0.5 rounded-full border ${skillPill[s.level] || skillPill.Beginner}`}>
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {match.user?.skills.slice(0,3).map(s => (
+                      <span key={s.name} className={`text-[11px] px-2 py-1 rounded-full border ${skillPill[s.level] || skillPill.Beginner}`}>
                         {s.name}
                       </span>
                     ))}
                   </div>
 
-                  <Link to={`/chat/${match._id}`}>
+                  <Link to={`/chat/${match._id}`} className="block">
                     <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.97 }}
-                      className="flex items-center justify-center gap-1.5 w-full py-2 rounded-xl text-xs font-semibold text-indigo-300 cursor-pointer transition-colors"
-                      style={{ background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)' }}>
-                      <MessageCircle className="w-3.5 h-3.5"/>
-                      {match.lastMessage ? 'Continue Chat' : 'Say Hello 👋'}
+                      className="flex items-center justify-between gap-3 w-full py-2 rounded-xl text-xs font-semibold text-indigo-200 cursor-pointer transition-colors bg-gradient-to-r from-indigo-700/10 to-transparent border border-indigo-500/10 px-3">
+                      <div className="flex items-center gap-3">
+                        <MessageCircle className="w-4 h-4" />
+                        <div className="text-left">
+                          <div className="text-white text-sm leading-5">
+                            {match.lastMessage?.text ? (match.lastMessage.text.length > 40 ? match.lastMessage.text.slice(0,40) + '...' : match.lastMessage.text) : 'Say Hello 👋'}
+                          </div>
+                          <div className="text-slate-500 text-[11px]">
+                            {match.lastMessage ? `${formatDistanceToNow(new Date(match.lastMessage.createdAt), { addSuffix: true })}` : 'Tap to start a conversation'}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2 text-indigo-300">
+                        <Sparkles className="w-4 h-4" />
+                      </div>
                     </motion.div>
                   </Link>
                 </div>
