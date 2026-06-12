@@ -1,24 +1,32 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AnimatePresence } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
+import { Loader2 } from 'lucide-react';
 
 import { useAuthStore } from '@/store/authStore';
 import { useSocket } from '@/hooks/useSocket';
 import Navbar from '@/components/layout/Navbar';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 
-import Landing from '@/pages/Landing';
-import Login from '@/pages/Login';
-import Register from '@/pages/Register';
-import GoogleAuth from '@/pages/GoogleAuth';
-import Discover from '@/pages/Discover';
-import Matches from '@/pages/Matches';
-import Chat from '@/pages/Chat';
-import Profile from '@/pages/Profile';
-import EditProfile from '@/pages/EditProfile';
-import Friends from '@/pages/Friends';
-import Notifications from '@/pages/Notifications';
+const Landing       = lazy(() => import('@/pages/Landing'));
+const Login         = lazy(() => import('@/pages/Login'));
+const Register      = lazy(() => import('@/pages/Register'));
+const GoogleAuth    = lazy(() => import('@/pages/GoogleAuth'));
+const Discover      = lazy(() => import('@/pages/Discover'));
+const Matches       = lazy(() => import('@/pages/Matches'));
+const Chat          = lazy(() => import('@/pages/Chat'));
+const Profile       = lazy(() => import('@/pages/Profile'));
+const EditProfile   = lazy(() => import('@/pages/EditProfile'));
+const Friends       = lazy(() => import('@/pages/Friends'));
+const Notifications = lazy(() => import('@/pages/Notifications'));
+
+const PageLoader = () => (
+  <div className="min-h-screen bg-[#080b14] flex items-center justify-center">
+    <Loader2 className="w-6 h-6 text-indigo-400 animate-spin" />
+  </div>
+);
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1, staleTime: 30_000 } }
@@ -84,13 +92,15 @@ const App = () => {
             },
           }}
         />
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/login"    element={isAuthenticated ? <Navigate to="/discover" /> : <Login />} />
-          <Route path="/register" element={isAuthenticated ? <Navigate to="/discover" /> : <Register />} />
-          <Route path="/auth/google" element={<GoogleAuth />} />
-          <Route path="/*" element={<AppLayout />} />
-        </Routes>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/login"    element={isAuthenticated ? <Navigate to="/discover" /> : <Login />} />
+            <Route path="/register" element={isAuthenticated ? <Navigate to="/discover" /> : <Register />} />
+            <Route path="/auth/google" element={<GoogleAuth />} />
+            <Route path="/*" element={<AppLayout />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </QueryClientProvider>
   );
